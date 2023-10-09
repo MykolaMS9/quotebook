@@ -1,0 +1,28 @@
+{% extends "quoteapp/base.html" %}
+
+{% block content %}
+
+<form class="card p-3"  method="POST" action="{% url 'quoteapp:author' %}">
+    <div class="">Add author:</div>
+    {% csrf_token %}
+    <div class="card-body" style="padding: 10px">
+        <div class="card-text">
+            <label>Enter the fullname:</label>
+            <div>{{form.fullname}}</div>
+            <label>Enter the born_date:</label>
+            <div>{{form.born_date}}</div>
+            <label>Enter the born_location:</label>
+            <div>{{form.born_location}}</div>
+            <label>Enter the description:</label>
+            <div>{{form.description}}</div>
+        </div>
+    </div>
+    <div class="grid">
+        <span>{{ form.errors }}</span>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="reset" class="secondary btn btn-warning">Reset</button>
+    </div>
+</form>
+
+{% endblock %}
+

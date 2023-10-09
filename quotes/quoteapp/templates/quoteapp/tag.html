@@ -1,0 +1,28 @@
+{% extends "quoteapp/base.html" %}
+
+{% block content %}
+
+<form method="POST" action="{% url 'quoteapp:tag' %}">
+    1) Add tags of the quote:
+    {% csrf_token %}
+    <div style="padding: 10px">
+        <p>Existed tags:
+            {% for tag in tags %}
+            <small> {{ tag }}/ </small>
+            {% endfor %}
+        </p>
+        <div>
+            <label>Enter the tags:
+                {{form.name}}
+            </label>
+            <button type="submit" class="btn btn-success">Add tag</button>
+            <button type="reset" class="secondary btn btn-warning">Reset</button>
+        </div>
+    </div>
+    <div class="grid">
+        <span>{{ form.errors }}</span>
+        <a href="{% url 'quoteapp:quote' %}" type="button" class="btn btn-primary">Next step -></a>
+    </div>
+</form>
+
+{% endblock %}

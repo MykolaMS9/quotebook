@@ -1,0 +1,39 @@
+{% extends  "quoteapp/base.html" %}
+
+{% block content %}
+
+
+<form class="row g-3 " action="{% url 'quoteapp:quote' %}" method="POST" enctype="multipart/form-data">
+    <!--  для захисту від фішингу-->
+    {% csrf_token %}
+
+    <div class="col-12">{{header_title}}</div>
+    <div class="col-12">
+        <div class="col-12">Quote</div>
+        <div class="col-12">{{form.quote}}</div>
+    </div>
+    <div class="col-12 mb-3">
+        <label class="form-label">
+            <div>Select author:
+            </div>
+            <select name="authors" required>
+                {% for author in authors %}
+                <option value="{{author.fullname}}">{{author.fullname}}</option>
+                {% endfor %}
+            </select></label>
+    </div>
+    <div class="col-12 mb-3">
+        <label>
+            <div class="col-12">Select tags:</div>
+            <select name="tags" multiple="multiple" required>
+                {% for tag in tags %}
+                <option value="{{tag.name}}">{{tag.name}}</option>
+                {% endfor %}
+            </select>
+        </label>
+    </div>
+    <span>{{ form.errors }}</span>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

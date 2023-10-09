@@ -1,0 +1,55 @@
+{% extends  "quoteapp/base.html" %}
+
+{% block content %}
+
+<!--top tags-->
+
+
+<!--filter-->
+
+{% if filter %}
+<div>
+    <p class="card-text p-3">Filter: {{filter}}</p>
+
+</div>
+{% endif %}
+<!--cards-->
+
+
+{% for quote in page_obj %}
+<div class="card text-bg-light mb-3">
+    <div class="card-header"><a href="{% url 'quoteapp:author_detail' quote.author.id %}"
+                                class="nav-link link-primary fst-italic">{{quote.author}}</a></div>
+    <div class="card-body pb-2">
+        <h5 class="card-text p-2 ">{{ quote.quote }}</h5>
+        <!--        tags-->
+        <div class="row-cols-auto gap-1 ">
+            {% for tag in quote.tags.all %}
+            <a class="btn btn-primary btn-sm mr-1" href="{% url 'quoteapp:tag_find' tag.id %}" role="button">
+                {{tag.name}}</a>
+            {% endfor %}
+        </div>
+        <!--        who added-->
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 ">
+            <div class="col-md-9 mb-md-0"><small class="text-body-secondary">
+                <a href="{% url 'quoteapp:user_find' quote.user.id %}"
+                   class="link-secondary fst-italic">@{{quote.user}}</a>
+                Created {{ quote.created }}
+            </small></div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item"><a href="?page=1" class="page-link">&laquo;</a></li>
+    <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>  </li>
+    {% if page_obj.has_next %}
+    <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a></li>
+    <li class="page-item"><a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">&raquo;</a></li>
+    {% endif %}
+</ul>
+{% endblock %}
